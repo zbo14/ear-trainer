@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Ear Trainer</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/themes/light.css"
+    />
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/shoelace-autoloader.js"
+    ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Audiowide&family=Lexend:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <h1>Ear Trainer</h1>
+      <sl-select class="challenge-type" label="Challenge" value="chords">
+        <sl-option value="chords">Chords</sl-option>
+        <sl-option value="intervals">Intervals</sl-option>
+        <sl-option value="progressions">Progressions</sl-option>
+        <sl-option value="scales">Scales</sl-option>
+      </sl-select>
+      <sl-button class="new-challenge"> New challenge </sl-button>
+      <sl-button class="play-challenge">
+        Play
+        <sl-icon name="volume-up"></sl-icon>
+      </sl-button>
+      <sl-select class="answer" label="Answer"></sl-select>
+      <sl-button class="check-answer"
+        >Check<sl-icon name="check"></sl-icon
+      ></sl-button>
+      <p class="result"></p>
+      <div class="piano-container">
+        <sl-button class="toggle-piano">Hide piano</sl-button>
+        <custom-piano-keys
+          oct-count="2"
+          mark-color="#6f76f5"
+        ></custom-piano-keys>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,117 @@
+export default {
+  notes: [
+    'Ab',
+    'A',
+    'A#',
+    'Bb',
+    'B',
+    'C',
+    'C#',
+    'Db',
+    'D',
+    'D#',
+    'Eb',
+    'E',
+    'F',
+    'F#',
+    'Gb',
+    'G',
+    'G#',
+  ],
+
+  octaves: [3, 4],
+
+  chords: [
+    { value: 'maj' },
+    { value: 'maj7' },
+    { value: 'maj#4' },
+    { value: '/3' },
+    { value: '/5' },
+    { value: '6' },
+
+    { value: 'min' },
+    { value: 'm6' },
+    { value: 'min7' },
+
+    { value: 'sus2' },
+    { value: 'sus4' },
+
+    { value: '7' },
+    { value: '9' },
+    { value: '7#11' },
+    { value: '7b13' },
+
+    { value: 'dim' },
+    { value: 'dim7' },
+
+    { value: 'aug' },
+    { value: 'aug7' },
+  ],
+
+  intervals: [
+    { value: '1P' },
+    { value: '2m' },
+    { value: '2M' },
+    { value: '3m' },
+    { value: '3M' },
+    { value: '4P' },
+    { value: '5d' },
+    { value: '5P' },
+    { value: '6m' },
+    { value: '6M' },
+    { value: '7m' },
+    { value: '7M' },
+    { value: '8P' },
+    { value: '9m' },
+    { value: '9M' },
+  ],
+
+  progressions: [
+    { value: 'I, IV, V' },
+    { value: 'IV, V, I' },
+    { value: 'V, IV, I' },
+    { value: 'I7, IV7, V7' },
+    { value: 'V7, IV7, I7' },
+    { value: 'IV, IVm, I' },
+    { value: 'I, bVI, V' },
+    { value: 'IIm7, V7, IMaj7' },
+
+    { value: 'I, V, VIm, IV' },
+    { value: 'I, IV, VIm, V' },
+    { value: 'I, V, IV, V' },
+    { value: 'I, VIm, IV, V' },
+    { value: 'I, bVII, IV, I' },
+    { value: 'VIm, V, IV, V' },
+
+    { value: 'I, V, VIm, IIIm, IV' },
+    { value: 'I, V, IV, bVII, I' },
+  ],
+
+  scales: [
+    { value: 'major' },
+    { value: 'dorian' },
+    { value: 'phrygian' },
+    { value: 'lydian' },
+    { value: 'mixolydian' },
+    { value: 'minor' },
+    { value: 'locrian' },
+
+    { value: 'diminished' },
+    { value: 'chromatic' },
+    { value: 'whole tone' },
+
+    { value: 'major pentatonic' },
+    { value: 'major blues' },
+    { value: 'major augmented' },
+    { value: 'harmonic major' },
+    { value: 'double harmonic major' },
+    { value: 'neopolitan major' },
+
+    { value: 'minor pentatonic' },
+    { value: 'minor six pentatonic' },
+    { value: 'minor blues' },
+    { value: 'minor hexatonic' },
+    { value: 'harmonic minor' },
+    { value: 'melodic minor' },
+  ],
+};

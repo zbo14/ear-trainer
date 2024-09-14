@@ -1,0 +1,28 @@
+{
+  "name": "ear-trainer",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "format": "prettier -w .prettierrc.mjs index.html *.{html,ts} src; pnpm exec stylelint --fix \"src/*.css\""
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3",
+    "stylelint": "^16.9.0",
+    "stylelint-config-standard": "^36.0.1",
+    "typescript": "^5.5.3",
+    "vite": "^5.4.1",
+    "vite-plugin-html": "^3.2.2"
+  },
+  "dependencies": {
+    "@tonaljs/chord": "^6.1.0",
+    "@tonaljs/note": "^4.11.0",
+    "@tonaljs/progression": "^4.9.0",
+    "@tonaljs/scale": "^4.13.0",
+    "custom-piano-keys": "^0.0.15",
+    "tone": "^15.0.4"
+  }
+}
