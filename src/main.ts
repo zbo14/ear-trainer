@@ -42,6 +42,7 @@ function setNewChallenge() {
   markedKeys = notesToPianoKeys(challenge.notes);
   pResult.classList.remove('correct', 'incorrect');
   pResult.innerText = 'Result';
+  pianoKeys.setAttribute('marked-keys', '');
   setAnswerOptions();
 }
 
