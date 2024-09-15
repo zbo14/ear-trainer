@@ -20,4 +20,4 @@ export const sampler = new Tone.Sampler({
   baseUrl: 'https://tonejs.github.io/audio/salamander/',
 }).toDestination();
 
-Promise.all([Tone.loaded(), Tone.start()]).catch(console.error);
+Tone.start();

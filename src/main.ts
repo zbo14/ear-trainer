@@ -3,6 +3,7 @@ import './style.css';
 import { createChallenge } from './challenge';
 import { Challenge, ChallengeType } from './types';
 import { sampler } from './sampler';
+
 import {
   hideElements,
   notesToPianoKeys,
@@ -13,6 +14,7 @@ import {
 let answer: string = '';
 let challenge: Challenge | null = null;
 let challengeType: ChallengeType = 'chords';
+let isPlaying = false;
 let markedKeys: number[][] = [[]];
 let noteLength = 1;
 
@@ -62,18 +64,25 @@ function setAnswerOptions() {
 }
 
 export async function playChallenge() {
-  if (!challenge) {
+  if (!challenge || isPlaying) {
     return;
   }
 
+  isPlaying = true;
+  pianoKeys.setAttribute('marked-keys', '');
+
   // TODO: fix issue with Tone.loop() not playing every note
   for (const [index, notes] of challenge.notes.entries()) {
+    if (sampler.context.state !== 'running') {
+      await sampler.context.resume();
+    }
+
     sampler.triggerAttackRelease(notes, String(noteLength));
     pianoKeys.setAttribute('marked-keys', markedKeys[index].join(' '));
     await new Promise((resolve) => setTimeout(resolve, noteLength * 1e3));
   }
 
-  pianoKeys.setAttribute('marked-keys', '');
+  isPlaying = false;
 }
 
 buttonNewChallenge?.addEventListener('click', () => {
