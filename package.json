@@ -1,8 +1,11 @@
 {
   "name": "ear-trainer",
+  "description": "Ear training web app with challenges for chords, intervals, progressions, and scales.",
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "author": "Zach Balder",
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "tsc && vite build",

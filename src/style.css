@@ -138,6 +138,10 @@ p.result {
   & > sl-button {
     max-width: 50%;
   }
+
+  & > custom-piano-keys.mobile {
+    display: none;
+  }
 }
 
 @media only screen and (width <= 800px) {
@@ -156,5 +160,17 @@ p.result {
 
   sl-option::part(label) {
     font-size: var(--sl-font-size-small);
+  }
+
+  .piano-container {
+    & > custom-piano-keys {
+      &.mobile {
+        display: unset;
+      }
+
+      &.desktop {
+        display: none;
+      }
+    }
   }
 }
