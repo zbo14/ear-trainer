@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#9197f7" />
     <title>Ear Trainer</title>
     <meta
       name="description"
@@ -46,7 +47,6 @@
     />
   </head>
   <body>
-    <div class="background"></div>
     <script>
       const mode = localStorage.getItem('mode');
 
@@ -94,21 +94,18 @@
           </div>
         </div>
       </header>
+      <sl-button class="play-challenge">
+        Play
+        <sl-icon name="volume-up"></sl-icon>
+      </sl-button>
+      <sl-select class="answer" label="Answer"></sl-select>
+      <sl-button class="new-challenge"> New challenge </sl-button>
       <sl-select class="challenge-type" label="Challenge" value="chords">
         <sl-option value="chords">Chords</sl-option>
         <sl-option value="intervals">Intervals</sl-option>
         <sl-option value="progressions">Progressions</sl-option>
         <sl-option value="scales">Scales</sl-option>
       </sl-select>
-      <sl-button class="new-challenge"> New challenge </sl-button>
-      <sl-button class="play-challenge">
-        Play
-        <sl-icon name="volume-up"></sl-icon>
-      </sl-button>
-      <sl-select class="answer" label="Answer"></sl-select>
-      <sl-button class="check-answer"
-        >Check<sl-icon name="check"></sl-icon
-      ></sl-button>
       <p class="result"></p>
       <div class="piano-container">
         <sl-button class="toggle-piano">Hide piano</sl-button>

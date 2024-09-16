@@ -22,6 +22,14 @@ let mode = getMode();
 let noteLength = 1;
 
 const switchMode = document.querySelector('div.switch-mode > sl-switch');
+const metaThemeColor = document.head.querySelector(
+  'meta[name="theme-color"]'
+) as HTMLMetaElement;
+
+function changeBackgroundColor() {
+  document.documentElement.style.backgroundColor = metaThemeColor.content =
+    mode === 'dark' ? '#191c47' : '#f9f9ff';
+}
 
 switchMode?.addEventListener('sl-change', (event) => {
   const { checked } = event.target as HTMLInputElement;
@@ -32,11 +40,15 @@ switchMode?.addEventListener('sl-change', (event) => {
   } else {
     document.body.classList.remove('sl-theme-dark');
   }
+
+  changeBackgroundColor();
 });
 
 if (mode === 'dark') {
   switchMode?.setAttribute('checked', 'true');
 }
+
+changeBackgroundColor();
 
 const dialog = document.querySelector('div.info > sl-dialog') as any;
 const openDialogButton = dialog.nextElementSibling;
@@ -54,10 +66,6 @@ const buttonNewChallenge = document.querySelector(
 
 const buttonPlayChallenge = document.querySelector(
   'sl-button.play-challenge'
-) as HTMLButtonElement;
-
-const buttonCheckAnswer = document.querySelector(
-  'sl-button.check-answer'
 ) as HTMLButtonElement;
 
 const buttonTogglePiano = document.querySelector(
@@ -87,8 +95,6 @@ function setAnswerOptions() {
     slOption.innerText = option.value;
     selectAnswer.append(slOption);
   }
-
-  buttonCheckAnswer.disabled = true;
 }
 
 export async function playChallenge() {
@@ -121,22 +127,6 @@ buttonPlayChallenge.addEventListener('click', async () => {
   playChallenge();
 });
 
-buttonCheckAnswer.addEventListener('click', () => {
-  if (!challenge || !answer) {
-    return;
-  }
-
-  if (removeSpaces(challenge.answer.value) === answer) {
-    pResult.classList.remove('incorrect');
-    pResult.classList.add('correct');
-    pResult.innerText = 'Correct';
-  } else {
-    pResult.classList.remove('correct');
-    pResult.classList.add('incorrect');
-    pResult.innerText = 'Try again';
-  }
-});
-
 buttonTogglePiano.addEventListener('click', () => {
   const text = buttonTogglePiano.innerText;
 
@@ -165,8 +155,18 @@ selectChallengeType?.addEventListener('sl-change', (event) => {
 selectAnswer?.addEventListener('sl-change', (event) => {
   answer = (event.target as HTMLSelectElement).value;
 
-  if (buttonCheckAnswer.disabled) {
-    buttonCheckAnswer.disabled = false;
+  if (!challenge || !answer) {
+    return;
+  }
+
+  if (removeSpaces(challenge.answer.value) === answer) {
+    pResult.classList.remove('incorrect');
+    pResult.classList.add('correct');
+    pResult.innerText = 'Correct';
+  } else {
+    pResult.classList.remove('correct');
+    pResult.classList.add('incorrect');
+    pResult.innerText = 'Try again';
   }
 });
 
