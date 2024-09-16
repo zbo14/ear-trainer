@@ -82,6 +82,7 @@ export default {
     { value: 'I, VIm, IV, V' },
     { value: 'I, bVII, IV, I' },
     { value: 'VIm, V, IV, V' },
+    { value: 'VIm, IIIm, V, IV' },
 
     { value: 'I, V, VIm, IIIm, IV' },
     { value: 'I, V, IV, bVII, I' },

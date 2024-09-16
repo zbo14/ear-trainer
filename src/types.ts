@@ -13,3 +13,5 @@ export interface Challenge {
   options: ChallengeDefinition[];
   type: ChallengeType;
 }
+
+export type Mode = 'light' | 'dark';

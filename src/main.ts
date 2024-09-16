@@ -5,9 +5,11 @@ import { Challenge, ChallengeType } from './types';
 import { sampler } from './sampler';
 
 import {
+  getMode,
   hideElements,
   notesToPianoKeys,
   removeSpaces,
+  setMode,
   showElements,
 } from './util';
 
@@ -16,7 +18,25 @@ let challenge: Challenge | null = null;
 let challengeType: ChallengeType = 'chords';
 let isPlaying = false;
 let markedKeys: number[][] = [[]];
+let mode = getMode();
 let noteLength = 1;
+
+const switchMode = document.querySelector('div.switch-mode > sl-switch');
+
+switchMode?.addEventListener('sl-change', (event) => {
+  const { checked } = event.target as HTMLInputElement;
+  mode = setMode(checked ? 'dark' : 'light');
+
+  if (mode === 'dark') {
+    document.body.classList.add('sl-theme-dark');
+  } else {
+    document.body.classList.remove('sl-theme-dark');
+  }
+});
+
+if (mode === 'dark') {
+  switchMode?.setAttribute('checked', 'true');
+}
 
 const pianoKeys = document.querySelector('custom-piano-keys') as HTMLElement;
 const pResult = document.querySelector('p.result') as HTMLDivElement;
@@ -143,4 +163,16 @@ selectAnswer?.addEventListener('sl-change', (event) => {
   }
 });
 
+function setPianoKeysWidth() {
+  pianoKeys.setAttribute(
+    'oct-w-factor',
+    String(window.innerWidth <= 800 ? 1.25 : 1.5)
+  );
+}
+
+window.addEventListener('resize', () => {
+  setPianoKeysWidth();
+});
+
 setNewChallenge();
+setPianoKeysWidth();

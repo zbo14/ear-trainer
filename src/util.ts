@@ -2,7 +2,7 @@ import { notes as chordNotes } from '@tonaljs/chord';
 import { get as getNote, transpose } from '@tonaljs/note';
 import { fromRomanNumerals as progression } from '@tonaljs/progression';
 import { get as getScale } from '@tonaljs/scale';
-import { ChallengeDefinition } from './types';
+import { ChallengeDefinition, Mode } from './types';
 
 export function chooseRandom<T>(items: T[]): T {
   return items[Math.floor(items.length * Math.random())];
@@ -66,6 +66,25 @@ export function getIntervalNotes(
   const tonic = `${note}${octave}`;
 
   return [[tonic], [transpose(tonic, interval)]];
+}
+
+export function getMode(): Mode {
+  const mode = localStorage.getItem('mode');
+
+  if (mode) {
+    return mode as Mode;
+  }
+
+  if (
+    window.matchMedia &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+  ) {
+    setMode('dark');
+    return 'dark';
+  }
+
+  setMode('light');
+  return 'light';
 }
 
 export function getProgressionNotes(
@@ -133,6 +152,11 @@ export function parseChordNumerals(definition: ChallengeDefinition) {
 
 export function removeSpaces(string: string) {
   return string.replace(/ /g, '_');
+}
+
+export function setMode(mode: Mode) {
+  localStorage.setItem('mode', mode);
+  return mode;
 }
 
 export function showElements(...elements: HTMLElement[]) {
