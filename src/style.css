@@ -53,17 +53,25 @@
   --sl-color-primary-50: #191c47;
 }
 
-html,
-body {
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
+html {
+  background-color: var(--sl-color-primary-50);
 }
 
 body {
-  background: var(--sl-color-primary-50);
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: var(--sl-color-primary-50);
   padding: var(--sl-spacing-large) 0;
+}
+
+div.background {
+  position: fixed;
+  overflow: hidden;
+  height: 200vh;
+  width: 100%;
+  background-color: var(--sl-color-primary-50);
+  z-index: -1;
 }
 
 * {
@@ -76,7 +84,7 @@ body {
   }
 }
 
-#grid {
+#app {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(auto, 1fr);
@@ -91,10 +99,11 @@ body {
   }
 }
 
-div.heading {
+header {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   grid-column: span 2;
+  justify-content: space-between;
 
   & > h1 {
     margin: 0;
@@ -107,15 +116,45 @@ div.heading {
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+
+  & div.info {
+    & sl-icon-button {
+      font-size: var(--sl-font-size-large);
+    }
+  }
+}
+
+div.group {
+  display: flex;
+  gap: var(--sl-spacing-small);
+  align-items: center;
 }
 
 sl-button {
-  & sl-icon {
+  & > sl-icon {
     font-size: var(--sl-font-size-medium);
     margin-left: var(--sl-spacing-3x-small);
   }
+}
 
-  &:hover sl-icon {
+ol {
+  list-style-type: none;
+
+  & > li {
+    display: flex;
+    align-items: center;
+    gap: var(--sl-spacing-large);
+    margin: var(--sl-spacing-x-large) 0;
+
+    & > sl-icon {
+      color: var(--sl-color-primary-700);
+      font-size: var(--sl-font-size-large);
+    }
+  }
+}
+
+sl-button:hover {
+  & > sl-icon {
     color: var(--sl-color-primary-700);
   }
 }
@@ -170,12 +209,18 @@ p.result {
   }
 }
 
-p.made-with-love {
-  position: absolute;
-  bottom: var(--sl-spacing-x-large);
-  left: 50%;
-  transform: translateX(-50%);
-  margin: 0;
+footer {
+  grid-column: span 2;
+  display: flex;
+  justify-content: center;
+
+  & > p.made-with-love {
+    margin: 0;
+  }
+}
+
+sl-switch {
+  --thumb-size: var(--sl-font-size-large);
 }
 
 div.switch-mode {
@@ -189,7 +234,7 @@ div.switch-mode {
 }
 
 @media only screen and (width <= 800px) {
-  #grid {
+  #app {
     gap: var(--sl-spacing-3x-large) 0;
     width: 100%;
 
@@ -204,5 +249,9 @@ div.switch-mode {
 
   sl-option::part(label) {
     font-size: var(--sl-font-size-small);
+  }
+
+  div.group {
+    gap: var(--sl-spacing-x-small);
   }
 }

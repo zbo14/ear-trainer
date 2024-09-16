@@ -38,6 +38,13 @@ if (mode === 'dark') {
   switchMode?.setAttribute('checked', 'true');
 }
 
+const dialog = document.querySelector('div.info > sl-dialog') as any;
+const openDialogButton = dialog.nextElementSibling;
+const closeDialogButton = dialog.querySelector('sl-button[slot="footer"]');
+
+openDialogButton.addEventListener('click', () => dialog.show());
+closeDialogButton.addEventListener('click', () => dialog.hide());
+
 const pianoKeys = document.querySelector('custom-piano-keys') as HTMLElement;
 const pResult = document.querySelector('p.result') as HTMLDivElement;
 

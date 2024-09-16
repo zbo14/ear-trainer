@@ -46,6 +46,7 @@
     />
   </head>
   <body>
+    <div class="background"></div>
     <script>
       const mode = localStorage.getItem('mode');
 
@@ -58,15 +59,41 @@
         document.body.classList.add('sl-theme-dark');
       }
     </script>
-    <div id="grid">
-      <div class="heading">
+    <div id="app">
+      <header>
         <h1>Ear Trainer</h1>
-        <div class="switch-mode">
-          <sl-icon name="sun"></sl-icon>
-          <sl-switch size="small"></sl-switch>
-          <sl-icon name="moon-fill"></sl-icon>
+        <div class="group">
+          <div class="info">
+            <sl-dialog label="How it works">
+              <ol>
+                <li>
+                  <sl-icon name="1-circle-fill"></sl-icon>Choose a type of
+                  challenge
+                </li>
+                <li>
+                  <sl-icon name="2-circle-fill"></sl-icon>Play the sound, and
+                  listen
+                </li>
+                <li>
+                  <sl-icon name="3-circle-fill"></sl-icon>Pick what you think
+                  the sound is
+                </li>
+                <li>
+                  <sl-icon name="4-circle-fill"></sl-icon>Check to see if you're
+                  right!
+                </li>
+              </ol>
+              <sl-button slot="footer" variant="primary">Got it</sl-button>
+            </sl-dialog>
+            <sl-icon-button name="info-circle"></sl-icon-button>
+          </div>
+          <div class="switch-mode">
+            <sl-icon name="sun"></sl-icon>
+            <sl-switch size="medium"></sl-switch>
+            <sl-icon name="moon-fill"></sl-icon>
+          </div>
         </div>
-      </div>
+      </header>
       <sl-select class="challenge-type" label="Challenge" value="chords">
         <sl-option value="chords">Chords</sl-option>
         <sl-option value="intervals">Intervals</sl-option>
@@ -87,13 +114,16 @@
         <sl-button class="toggle-piano">Hide piano</sl-button>
         <custom-piano-keys
           oct-count="3"
-          mark-color="#6f76f5"
+          mark-color="#f13c68"
         ></custom-piano-keys>
       </div>
+      <footer>
+        <p class="made-with-love">
+          Made with ❤️ by
+          <a href="https://zachbalder.me" target="_blank">Zach</a>
+        </p>
+      </footer>
     </div>
-    <p class="made-with-love">
-      Made with ❤️ by <a href="https://zachbalder.me" target="_blank">Zach</a>
-    </p>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
