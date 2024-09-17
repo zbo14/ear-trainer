@@ -9,7 +9,7 @@
       name="description"
       content="Ear Trainer: Ear training app with challenges for chords, intervals, progressions, and scales."
     />
-    <meta property="og:url" content="https://eartrainer.xyz" />
+    <meta property="og:url" content="https://ear-trainer.com" />
     <meta property="og:type" content="website" />
     <meta
       property="og:description"
@@ -17,8 +17,8 @@
     />
     <meta property="og:image" content="/images/logo.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta property="twitter:domain" content="eartrainer.xyz" />
-    <meta property="twitter:url" content="https://eartrainer.xyz" />
+    <meta property="twitter:domain" content="ear-trainer.com" />
+    <meta property="twitter:url" content="https://ear-trainer.com" />
     <meta
       name="twitter:description"
       content="Ear Trainer: Ear training app with challenges for chords, intervals, progressions, and scales."
@@ -27,18 +27,6 @@
     <meta property="og:title" content="Ear Trainer" />
     <meta name="twitter:title" content="Ear Trainer" />
     <link rel="icon" type="image/png" href="/images/logo.png" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/themes/light.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/themes/dark.css"
-    />
-    <script
-      type="module"
-      src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/shoelace-autoloader.js"
-    ></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -47,6 +35,19 @@
     />
   </head>
   <body>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-QTXZBT9HPE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-QTXZBT9HPE');
+    </script>
     <script>
       const mode = localStorage.getItem('mode');
 
@@ -60,40 +61,40 @@
       }
     </script>
     <div id="app">
-      <header>
-        <h1>Ear Trainer</h1>
-        <div class="group">
-          <div class="info">
-            <sl-dialog label="How it works">
-              <ol>
-                <li>
-                  <sl-icon name="1-circle-fill"></sl-icon>Choose a type of
-                  challenge
-                </li>
-                <li>
-                  <sl-icon name="2-circle-fill"></sl-icon>Play the sound, and
-                  listen
-                </li>
-                <li>
-                  <sl-icon name="3-circle-fill"></sl-icon>Pick what you think
-                  the sound is
-                </li>
-                <li>
-                  <sl-icon name="4-circle-fill"></sl-icon>Check to see if you're
-                  right!
-                </li>
-              </ol>
-              <sl-button slot="footer" variant="primary">Got it</sl-button>
-            </sl-dialog>
-            <sl-icon-button name="info-circle"></sl-icon-button>
-          </div>
-          <div class="switch-mode">
-            <sl-icon name="sun"></sl-icon>
-            <sl-switch size="medium"></sl-switch>
-            <sl-icon name="moon-fill"></sl-icon>
-          </div>
+      <h1>Ear Trainer</h1>
+      <div class="group">
+        <div class="info">
+          <sl-dialog label="How it works">
+            <ol>
+              <li>
+                <sl-icon name="1-circle-fill"></sl-icon>Choose a type of
+                challenge
+              </li>
+              <li>
+                <sl-icon name="2-circle-fill"></sl-icon>Play the sound, and
+                listen
+              </li>
+              <li>
+                <sl-icon name="3-circle-fill"></sl-icon>Pick what you think the
+                sound is
+              </li>
+              <li>
+                <sl-icon name="4-circle-fill"></sl-icon>See if you're right!
+              </li>
+            </ol>
+            <sl-button slot="footer" variant="primary">Got it</sl-button>
+          </sl-dialog>
+          <sl-icon-button
+            label="Open info dialog"
+            name="info-circle"
+          ></sl-icon-button>
         </div>
-      </header>
+        <div class="switch-mode">
+          <sl-icon name="sun"></sl-icon>
+          <sl-switch size="medium"></sl-switch>
+          <sl-icon name="moon-fill"></sl-icon>
+        </div>
+      </div>
       <sl-button class="play-challenge">
         Play
         <sl-icon name="volume-up"></sl-icon>

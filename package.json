@@ -10,6 +10,7 @@
     "dev": "vite --host 0.0.0.0",
     "build": "tsc && vite build",
     "preview": "vite preview",
+    "preview:build": "pnpm build; pnpm preview",
     "format": "prettier -w .prettierrc.mjs index.html *.{html,ts} src; pnpm exec stylelint --fix \"src/*.css\""
   },
   "devDependencies": {
@@ -18,9 +19,12 @@
     "stylelint-config-standard": "^36.0.1",
     "typescript": "^5.5.3",
     "vite": "^5.4.1",
-    "vite-plugin-html": "^3.2.2"
+    "vite-plugin-html": "^3.2.2",
+    "vite-plugin-sitemap": "^0.7.1",
+    "vite-plugin-static-copy": "^1.0.6"
   },
   "dependencies": {
+    "@shoelace-style/shoelace": "^2.16.0",
     "@tonaljs/chord": "^6.1.0",
     "@tonaljs/note": "^4.11.0",
     "@tonaljs/progression": "^4.9.0",

@@ -83,28 +83,21 @@ body {
   }
 }
 
-header {
-  display: flex;
-  align-items: center;
-  grid-column: span 2;
-  justify-content: space-between;
+h1 {
+  margin: 0;
+  font-family: var(--custom-font-display);
+  font-size: var(--sl-font-size-2x-large);
+  background: linear-gradient(
+    var(--sl-color-primary-600),
+    var(--sl-color-primary-950)
+  );
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-  & > h1 {
-    margin: 0;
-    font-family: var(--custom-font-display);
-    font-size: var(--sl-font-size-2x-large);
-    background: linear-gradient(
-      var(--sl-color-primary-600),
-      var(--sl-color-primary-950)
-    );
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  & div.info {
-    & sl-icon-button {
-      font-size: var(--sl-font-size-large);
-    }
+div.info {
+  & sl-icon-button {
+    font-size: var(--sl-font-size-large);
   }
 }
 
@@ -112,6 +105,8 @@ div.group {
   display: flex;
   gap: var(--sl-spacing-medium);
   align-items: center;
+  margin-right: 0;
+  margin-left: auto;
 }
 
 sl-button {
@@ -140,6 +135,12 @@ ol {
 sl-button:hover {
   & > sl-icon {
     color: var(--sl-color-primary-700);
+  }
+}
+
+sl-dialog {
+  &::part(body) {
+    padding: var(--sl-spacing-small) var(--sl-spacing-large);
   }
 }
 
