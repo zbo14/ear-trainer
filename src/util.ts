@@ -103,7 +103,10 @@ export function getProgressionNotes(
 }
 
 export function getScaleNotes(scale: string, note: string, octave: number) {
-  return getScale(`${note}${octave} ${scale}`).notes.map((note) => [note]);
+  return [
+    ...getScale(`${note}${octave} ${scale}`).notes.map((note) => [note]),
+    [`${note}${octave + 1}`],
+  ];
 }
 
 export function hideElements(...elements: HTMLElement[]) {

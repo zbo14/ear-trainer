@@ -83,6 +83,10 @@ const buttonTogglePiano = document.querySelector(
 ) as HTMLButtonElement;
 
 function setNewChallenge() {
+  if (isPlaying) {
+    return;
+  }
+
   challenge = createChallenge(challengeType);
   markedKeys = notesToPianoKeys(challenge.notes);
   pResult.classList.remove('correct', 'incorrect');
