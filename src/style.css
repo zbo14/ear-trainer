@@ -61,18 +61,24 @@
 
 body {
   margin: 0 auto var(--sl-spacing-large) auto;
-  padding: var(--sl-spacing-large) 0;
+  width: 50%;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(auto, 1fr);
   grid-auto-flow: row;
   align-items: end;
-  gap: var(--sl-spacing-4x-large) 0;
-  width: 50%;
+  gap: var(--sl-spacing-3x-large);
+  padding: var(--sl-spacing-2x-large) 0;
 
   & > * {
-    padding: 0 var(--sl-spacing-4x-large);
+    padding: 0 var(--sl-spacing-4x-large) 0 0;
+    grid-column: span 2;
   }
+}
+
+sl-tab-group {
+  padding: 0;
+  grid-column: span 4;
 }
 
 *:not(:defined) {
@@ -81,6 +87,7 @@ body {
 
 h1 {
   margin: 0;
+  padding: 0;
   font-family: var(--custom-font-display);
   font-size: var(--sl-font-size-2x-large);
   background: linear-gradient(
@@ -99,8 +106,8 @@ div.info {
 
 div.group {
   display: flex;
+  padding: 0;
   gap: var(--sl-spacing-medium);
-  align-items: center;
   margin-right: 0;
   margin-left: auto;
 }
@@ -125,6 +132,10 @@ ol {
       color: var(--sl-color-primary-700);
       font-size: var(--sl-font-size-large);
     }
+
+    &:has(sl-icon[name='exclamation-circle']) {
+      font-weight: 600;
+    }
   }
 }
 
@@ -135,9 +146,9 @@ sl-button:hover {
 }
 
 sl-dialog {
-  &::part(body) {
-    padding: var(--sl-spacing-small) var(--sl-spacing-large);
-  }
+  --header-spacing: var(--sl-spacing-x-large);
+  --body-spacing: 0;
+  --footer-spacing: var(--sl-spacing-x-large);
 }
 
 sl-select {
@@ -151,12 +162,11 @@ sl-select {
 }
 
 p.result {
-  place-self: center center;
+  justify-self: center;
   margin: 0;
   font-family: var(--custom-font-display);
   font-size: var(--sl-font-size-x-large);
   visibility: hidden;
-  grid-column: span 2;
 
   &.correct {
     visibility: visible;
@@ -179,11 +189,22 @@ p.result {
   }
 }
 
+div.score-field {
+  grid-column: span 1;
+  width: 100%;
+
+  & > p {
+    color: var(--sl-color-primary-600);
+    font-family: var(--custom-font-display);
+    text-align: center;
+  }
+}
+
 .piano-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  grid-column: span 2;
+  grid-column: span 4;
   gap: var(--sl-spacing-large);
 
   & > sl-button {
@@ -191,14 +212,10 @@ p.result {
   }
 }
 
-footer {
-  grid-column: span 2;
-  display: flex;
-  justify-content: center;
-
-  & > p.made-with-love {
-    margin: 0;
-  }
+p.made-with-love {
+  margin: 0;
+  grid-column: span 4;
+  justify-self: center;
 }
 
 sl-switch {
@@ -221,12 +238,7 @@ div.switch-mode {
 
 @media only screen and (width <= 800px) {
   body {
-    gap: var(--sl-spacing-3x-large) 0;
     width: 100%;
-
-    & > * {
-      padding: 0 var(--sl-spacing-small);
-    }
   }
 
   sl-select::part(display-input) {

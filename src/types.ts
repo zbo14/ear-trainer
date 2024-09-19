@@ -15,3 +15,17 @@ export interface Challenge {
 }
 
 export type Mode = 'light' | 'dark';
+
+export interface Score {
+  challengesCompleted: number;
+  challengesStarted: number;
+  correctFirstGuesses: number;
+  totalGuesses: number;
+}
+
+export interface Scores {
+  chords: Score;
+  intervals: Score;
+  progressions: Score;
+  scales: Score;
+}

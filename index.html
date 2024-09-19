@@ -7,13 +7,13 @@
     <title>Ear Trainer</title>
     <meta
       name="description"
-      content="Ear Trainer: Ear training app with challenges for chords, intervals, progressions, and scales."
+      content="Ear training app with challenges for chords, intervals, progressions, and scales."
     />
     <meta property="og:url" content="https://ear-trainer.com" />
     <meta property="og:type" content="website" />
     <meta
       property="og:description"
-      content="Ear Trainer: Ear training app with challenges for chords, intervals, progressions, and scales."
+      content="Ear training app with challenges for chords, intervals, progressions, and scales."
     />
     <meta property="og:image" content="/images/logo.png" />
     <meta name="twitter:card" content="summary" />
@@ -21,7 +21,7 @@
     <meta property="twitter:url" content="https://ear-trainer.com" />
     <meta
       name="twitter:description"
-      content="Ear Trainer: Ear training app with challenges for chords, intervals, progressions, and scales."
+      content="Ear training app with challenges for chords, intervals, progressions, and scales."
     />
     <meta name="twitter:image" content="" />
     <meta property="og:title" content="Ear Trainer" />
@@ -105,29 +105,43 @@
         <sl-icon name="moon-fill"></sl-icon>
       </div>
     </div>
+    <sl-tab-group class="challenge-type">
+      <sl-tab slot="nav" panel="chords" active>Chords</sl-tab>
+      <sl-tab slot="nav" panel="intervals">Intervals</sl-tab>
+      <sl-tab slot="nav" panel="progressions">Progressions</sl-tab>
+      <sl-tab slot="nav" panel="scales">Scales</sl-tab>
+    </sl-tab-group>
+    <div class="score-field started">
+      <p class="name">Started</p>
+      <p class="value"></p>
+    </div>
+    <div class="score-field completed">
+      <p class="name">Completed</p>
+      <p class="value"></p>
+    </div>
+    <div class="score-field correct">
+      <p class="name">Correct</p>
+      <p class="value"></p>
+    </div>
+    <div class="score-field average">
+      <p class="name">Average</p>
+      <p class="value"></p>
+    </div>
     <sl-button class="play-challenge">
       Play
       <sl-icon name="volume-up"></sl-icon>
     </sl-button>
+    <sl-button class="new-challenge"> Next </sl-button>
     <sl-select class="answer" label="Answer"></sl-select>
-    <sl-button class="new-challenge"> New challenge </sl-button>
-    <sl-select class="challenge-type" label="Challenge" value="chords">
-      <sl-option value="chords">Chords</sl-option>
-      <sl-option value="intervals">Intervals</sl-option>
-      <sl-option value="progressions">Progressions</sl-option>
-      <sl-option value="scales">Scales</sl-option>
-    </sl-select>
     <p class="result"></p>
     <div class="piano-container">
       <sl-button class="toggle-piano">Hide piano</sl-button>
       <custom-piano-keys oct-count="3" mark-color="#f13c68"></custom-piano-keys>
     </div>
-    <footer>
-      <p class="made-with-love">
-        Made with ❤️ by
-        <a href="https://zachbalder.me" target="_blank">Zach</a>
-      </p>
-    </footer>
+    <p class="made-with-love">
+      Made with ❤️ by
+      <a href="https://zachbalder.me" target="_blank">Zach</a>
+    </p>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

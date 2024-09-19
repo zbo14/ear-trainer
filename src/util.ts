@@ -2,7 +2,7 @@ import { notes as chordNotes } from '@tonaljs/chord';
 import { get as getNote, transpose } from '@tonaljs/note';
 import { fromRomanNumerals as progression } from '@tonaljs/progression';
 import { get as getScale } from '@tonaljs/scale';
-import { ChallengeDefinition, Mode } from './types';
+import { ChallengeDefinition, Mode, Score, Scores } from './types';
 
 export function chooseRandom<T>(items: T[]): T {
   return items[Math.floor(items.length * Math.random())];
@@ -27,6 +27,15 @@ export function chooseRandoms<T>(
   randoms.push(...includeItems);
 
   return shuffleItems(randoms);
+}
+
+export function createScore(): Score {
+  return {
+    challengesCompleted: 0,
+    challengesStarted: 0,
+    correctFirstGuesses: 0,
+    totalGuesses: 0,
+  };
 }
 
 export function getChordNotes(chordName: string, note: string, octave: number) {
@@ -109,6 +118,25 @@ export function getScaleNotes(scale: string, note: string, octave: number) {
   ];
 }
 
+export function getScores(): Scores {
+  const scoreString = localStorage.getItem('scores');
+
+  if (!scoreString) {
+    const scores = {
+      chords: createScore(),
+      intervals: createScore(),
+      progressions: createScore(),
+      scales: createScore(),
+    };
+
+    setScores(scores);
+
+    return scores;
+  }
+
+  return JSON.parse(scoreString);
+}
+
 export function hideElements(...elements: HTMLElement[]) {
   for (const element of elements) {
     element.style.visibility = 'hidden';
@@ -160,6 +188,10 @@ export function removeSpaces(string: string) {
 export function setMode(mode: Mode) {
   localStorage.setItem('mode', mode);
   return mode;
+}
+
+export function setScores(scores: Scores) {
+  localStorage.setItem('scores', JSON.stringify(scores));
 }
 
 export function showElements(...elements: HTMLElement[]) {
