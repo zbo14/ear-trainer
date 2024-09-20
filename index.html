@@ -41,6 +41,13 @@
         href="https://fonts.googleapis.com/css2?family=Audiowide&family=Lexend:wght@100..900&display=swap"
       />
     </noscript>
+    <link
+      rel="preload"
+      href="src/styles.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript><link rel="stylesheet" href="src/styles.css" /></noscript>
   </head>
   <body>
     <!-- Google tag (gtag.js) -->
@@ -111,6 +118,17 @@
       <sl-tab slot="nav" panel="progressions">Progressions</sl-tab>
       <sl-tab slot="nav" panel="scales">Scales</sl-tab>
     </sl-tab-group>
+    <sl-button class="play-challenge">
+      Play
+      <sl-icon name="volume-up"></sl-icon>
+    </sl-button>
+    <sl-button class="new-challenge"> Next </sl-button>
+    <sl-select class="answer" label="Answer"></sl-select>
+    <p class="result"></p>
+    <div class="piano-container">
+      <sl-button class="toggle-piano">Hide piano</sl-button>
+      <custom-piano-keys oct-count="3" mark-color="#f13c68"></custom-piano-keys>
+    </div>
     <div class="score-field started">
       <p class="name">Started</p>
       <p class="value"></p>
@@ -126,17 +144,6 @@
     <div class="score-field average">
       <p class="name">Average</p>
       <p class="value"></p>
-    </div>
-    <sl-button class="play-challenge">
-      Play
-      <sl-icon name="volume-up"></sl-icon>
-    </sl-button>
-    <sl-button class="new-challenge"> Next </sl-button>
-    <sl-select class="answer" label="Answer"></sl-select>
-    <p class="result"></p>
-    <div class="piano-container">
-      <sl-button class="toggle-piano">Hide piano</sl-button>
-      <custom-piano-keys oct-count="3" mark-color="#f13c68"></custom-piano-keys>
     </div>
     <p class="made-with-love">
       Made with ❤️ by

@@ -1,77 +1,25 @@
-:root,
-:host,
-.sl-theme-light {
-  --custom-font-display: 'Audiowide', sans-serif;
-  --sl-color-green-50: #ecfef3;
-  --sl-color-green-100: #bcfad3;
-  --sl-color-green-200: #7df6aa;
-  --sl-color-green-300: #1ded6a;
-  --sl-color-green-400: #1ad660;
-  --sl-color-green-500: #16b852;
-  --sl-color-green-600: #129844;
-  --sl-color-green-700: #0f7d38;
-  --sl-color-green-800: #0d672e;
-  --sl-color-green-900: #094a21;
-  --sl-color-green-950: #062d14;
-  --sl-color-primary-50: #f9f9ff;
-  --sl-color-primary-100: #eaebfe;
-  --sl-color-primary-200: #d9dcfc;
-  --sl-color-primary-300: #c8cbfb;
-  --sl-color-primary-400: #b0b5f9;
-  --sl-color-primary-500: #9197f7;
-  --sl-color-primary-600: #6f76f5;
-  --sl-color-primary-700: #4e58f2;
-  --sl-color-primary-800: #2f3af0;
-  --sl-color-primary-900: #1721bf;
-  --sl-color-primary-950: #0f1579;
-  --sl-color-red-50: #fef8f9;
-  --sl-color-red-100: #fde7ec;
-  --sl-color-red-200: #fcd4de;
-  --sl-color-red-300: #fabfcd;
-  --sl-color-red-400: #f8a1b6;
-  --sl-color-red-500: #f57796;
-  --sl-color-red-600: #f13c68;
-  --sl-color-red-700: #d31a47;
-  --sl-color-red-800: #af153b;
-  --sl-color-red-900: #7f0f2a;
-  --sl-color-red-950: #500a1b;
-  --sl-font-sans: 'Lexend', sans-serif;
-}
-
-.sl-theme-dark,
-:host {
-  --sl-color-primary-950: #f9f9ff;
-  --sl-color-primary-900: #eaebfe;
-  --sl-color-primary-800: #d9dcfc;
-  --sl-color-primary-700: #c8cbfb;
-  --sl-color-primary-600: #b0b5f9;
-  --sl-color-primary-500: #9197f7;
-  --sl-color-primary-400: #6f76f5;
-  --sl-color-primary-300: #4e58f2;
-  --sl-color-primary-200: #2f3af0;
-  --sl-color-primary-100: #1721bf;
-  --sl-color-primary-50: #191c47;
-}
-
 * {
   font-family: var(--sl-font-sans);
   font-optical-sizing: auto;
   color: var(--sl-color-primary-950);
 }
 
+p {
+  margin: 0;
+}
+
 body {
-  margin: 0 auto var(--sl-spacing-large) auto;
+  box-sizing: content-box;
+  margin: var(--sl-spacing-large) auto;
   width: 50%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(auto, 1fr);
   grid-auto-flow: row;
   align-items: end;
-  gap: var(--sl-spacing-3x-large);
-  padding: var(--sl-spacing-2x-large) 0;
+  gap: var(--sl-spacing-3x-large) var(--sl-spacing-4x-large);
 
   & > * {
-    padding: 0 var(--sl-spacing-4x-large) 0 0;
     grid-column: span 2;
   }
 }
@@ -163,7 +111,6 @@ sl-select {
 
 p.result {
   justify-self: center;
-  margin: 0;
   font-family: var(--custom-font-display);
   font-size: var(--sl-font-size-x-large);
   visibility: hidden;
@@ -191,7 +138,9 @@ p.result {
 
 div.score-field {
   grid-column: span 1;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sl-spacing-x-small);
 
   & > p {
     color: var(--sl-color-primary-600);
@@ -206,6 +155,7 @@ div.score-field {
   align-items: center;
   grid-column: span 4;
   gap: var(--sl-spacing-large);
+  margin: 0 auto;
 
   & > sl-button {
     max-width: 50%;
@@ -213,7 +163,6 @@ div.score-field {
 }
 
 p.made-with-love {
-  margin: 0;
   grid-column: span 4;
   justify-self: center;
 }
@@ -238,7 +187,17 @@ div.switch-mode {
 
 @media only screen and (width <= 800px) {
   body {
-    width: 100%;
+    width: 90%;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sl-spacing-x-large) var(--sl-spacing-large);
+
+    & > * {
+      grid-column: span 1;
+    }
+  }
+
+  h1 {
+    font-size: var(--sl-font-size-x-large);
   }
 
   sl-select::part(display-input) {
@@ -251,5 +210,17 @@ div.switch-mode {
 
   div.group {
     gap: var(--sl-spacing-x-small);
+  }
+
+  sl-tab-group {
+    grid-column: span 2;
+  }
+
+  .piano-container {
+    grid-column: span 2;
+  }
+
+  p.made-with-love {
+    grid-column: span 2;
   }
 }

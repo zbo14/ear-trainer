@@ -10,7 +10,7 @@ import '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import '@shoelace-style/shoelace/dist/components/tab/tab.js';
 import '@shoelace-style/shoelace/dist/components/tab-group/tab-group.js';
 import 'custom-piano-keys';
-import './style.css';
+import './theme.css';
 
 import SlDialog from '@shoelace-style/shoelace/dist/components/dialog/dialog.js';
 import SlButton from '@shoelace-style/shoelace/dist/components/button/button.js';
@@ -89,9 +89,15 @@ const pResult = document.querySelector('p.result') as HTMLParagraphElement;
 const pCompleted = document.querySelector(
   'div.score-field.completed > p.value'
 ) as HTMLParagraphElement;
-const pStarted = document.querySelector('div.score-field.started > p.value') as HTMLParagraphElement;
-const pCorrect = document.querySelector('div.score-field.correct > p.value') as HTMLParagraphElement;
-const pAverage = document.querySelector('div.score-field.average > p.value') as HTMLParagraphElement;
+const pStarted = document.querySelector(
+  'div.score-field.started > p.value'
+) as HTMLParagraphElement;
+const pCorrect = document.querySelector(
+  'div.score-field.correct > p.value'
+) as HTMLParagraphElement;
+const pAverage = document.querySelector(
+  'div.score-field.average > p.value'
+) as HTMLParagraphElement;
 
 const buttonNewChallenge = document.querySelector(
   'sl-button.new-challenge'
