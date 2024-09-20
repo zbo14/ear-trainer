@@ -22,7 +22,9 @@ import { Challenge, ChallengeType } from './types';
 import { sampler } from './sampler';
 
 import {
+  getChordIntervals,
   getMode,
+  getScaleIntervals,
   getScores,
   hideElements,
   notesToPianoKeys,
@@ -30,6 +32,7 @@ import {
   setMode,
   setScores,
   showElements,
+  translateInterval,
 } from './util';
 
 let answer: string = '';
@@ -134,7 +137,40 @@ function setAnswerOptions() {
   for (const option of challenge.options) {
     const slOption = document.createElement('sl-option');
     slOption.setAttribute('value', removeSpaces(option.value));
-    slOption.innerText = option.value;
+
+    switch (challengeType) {
+      case 'chords': {
+        const small = document.createElement('small');
+        small.setAttribute('slot', 'suffix');
+        small.innerText = getChordIntervals(option.value, challenge.note).join(
+          ', '
+        );
+        slOption.innerText = option.value;
+        slOption.append(small);
+        break;
+      }
+
+      case 'intervals': {
+        slOption.innerText = translateInterval(option.value);
+        break;
+      }
+
+      case 'scales': {
+        const small = document.createElement('small');
+        small.setAttribute('slot', 'suffix');
+        small.innerText = getScaleIntervals(option.value, challenge.note).join(
+          ', '
+        );
+        slOption.innerText = option.value;
+        slOption.append(small);
+        break;
+      }
+
+      default: {
+        slOption.innerText = option.value;
+      }
+    }
+
     selectAnswer.append(slOption);
   }
 }

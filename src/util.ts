@@ -1,4 +1,4 @@
-import { notes as chordNotes } from '@tonaljs/chord';
+import { get as getChord, notes as chordNotes } from '@tonaljs/chord';
 import { get as getNote, transpose } from '@tonaljs/note';
 import { fromRomanNumerals as progression } from '@tonaljs/progression';
 import { get as getScale } from '@tonaljs/scale';
@@ -38,33 +38,43 @@ export function createScore(): Score {
   };
 }
 
-export function getChordNotes(chordName: string, note: string, octave: number) {
-  chordName = chordName.replace(
-    /^.*?\/([1-7])([MPdm])?$/,
-    (match, p1, p2 = '', offset) => {
-      let interval;
+export function getChordName(chordName: string, note: string) {
+  return (
+    chordName.replace(
+      /^.*?\/([1-7])([MPdm])?$/,
+      (match, p1, p2 = '', offset) => {
+        let interval;
 
-      if (p2.length) {
-        interval = p1 + p2;
-      } else {
-        if (['4', '5'].includes(p1)) {
-          interval = p1 + 'P';
+        if (p2.length) {
+          interval = p1 + p2;
         } else {
-          interval = p1 + 'M';
+          if (['4', '5'].includes(p1)) {
+            interval = p1 + 'P';
+          } else {
+            interval = p1 + 'M';
+          }
         }
+
+        return (
+          note +
+          (match.slice(0, offset) +
+            '/' +
+            transpose(note, interval) +
+            match.slice(offset + p1.length + p2.length + 1))
+        );
       }
-
-      return (
-        note +
-        (match.slice(0, offset) +
-          '/' +
-          transpose(note, interval) +
-          match.slice(offset + p1.length + p2.length + 1))
-      );
-    }
+    ) || 'M'
   );
+}
 
-  return chordNotes(chordName || 'M', `${note}${octave}`);
+export function getChordIntervals(chordName: string, note: string) {
+  const { intervals } = getChord(getChordName(chordName, note));
+
+  return intervals.map(translateInterval);
+}
+
+export function getChordNotes(chordName: string, note: string, octave: number) {
+  return chordNotes(getChordName(chordName, note), `${note}${octave}`);
 }
 
 export function getIntervalNotes(
@@ -109,6 +119,10 @@ export function getProgressionNotes(
     ) as string[];
     return getChordNotes(chordName, note, octave);
   });
+}
+
+export function getScaleIntervals(scale: string, note: string) {
+  return getScale(`${note} ${scale}`).intervals.map(translateInterval);
 }
 
 export function getScaleNotes(scale: string, note: string, octave: number) {
@@ -202,4 +216,26 @@ export function showElements(...elements: HTMLElement[]) {
 
 export function shuffleItems<T>(items: T[]): T[] {
   return [...items].sort(() => (Math.random() > 0.5 ? 1 : -1));
+}
+
+export function translateInterval(interval: string) {
+  const [, number, letter] = interval.match(/([0-9]+)([ADMPdm])/) as string[];
+
+  let accidental = '';
+
+  switch (letter) {
+    case 'A': {
+      accidental = '#';
+      break;
+    }
+
+    case 'D':
+    case 'd':
+    case 'm': {
+      accidental = 'b';
+      break;
+    }
+  }
+
+  return accidental + number;
 }

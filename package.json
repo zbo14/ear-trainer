@@ -2,7 +2,7 @@
   "name": "ear-trainer",
   "description": "Ear training web app with challenges for chords, intervals, progressions, and scales.",
   "private": true,
-  "version": "0.2.1",
+  "version": "0.3.0",
   "type": "module",
   "author": "Zach Balder",
   "license": "UNLICENSED",
@@ -24,7 +24,7 @@
     "vite-plugin-static-copy": "^1.0.6"
   },
   "dependencies": {
-    "@shoelace-style/shoelace": "^2.16.0",
+    "@shoelace-style/shoelace": "^2.17.0",
     "@tonaljs/chord": "^6.1.0",
     "@tonaljs/note": "^4.11.0",
     "@tonaljs/progression": "^4.9.0",

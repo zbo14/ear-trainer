@@ -24,7 +24,7 @@ export default defineConfig({
         },
       ],
     }),
-    Sitemap({ hostname: 'https://ear-trainer.com' }),
+    Sitemap({ hostname: 'https://eartrainer.xyz' }),
     createHtmlPlugin(),
   ],
 });

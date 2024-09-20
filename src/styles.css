@@ -9,7 +9,6 @@ p {
 }
 
 body {
-  box-sizing: content-box;
   margin: var(--sl-spacing-large) auto;
   width: 50%;
   display: grid;
@@ -104,8 +103,8 @@ sl-select {
     margin-bottom: var(--sl-spacing-small);
   }
 
-  & small {
-    font-weight: bold;
+  ::part(display-input) {
+    font-size: var(--sl-font-size-small);
   }
 }
 
@@ -200,12 +199,10 @@ div.switch-mode {
     font-size: var(--sl-font-size-x-large);
   }
 
-  sl-select::part(display-input) {
-    font-size: var(--sl-font-size-small);
-  }
-
-  sl-option::part(label) {
-    font-size: var(--sl-font-size-small);
+  sl-option {
+    & ::part(label) {
+      font-size: var(--sl-font-size-small);
+    }
   }
 
   div.group {
@@ -221,6 +218,14 @@ div.switch-mode {
   }
 
   p.made-with-love {
+    grid-column: span 2;
+  }
+
+  sl-select.answer {
+    grid-column: span 2;
+  }
+
+  p.result {
     grid-column: span 2;
   }
 }
