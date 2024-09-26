@@ -40,6 +40,7 @@
 
 .sl-theme-dark,
 :host {
+  --custom-font-display: 'Audiowide', sans-serif;
   --sl-color-primary-950: #f9f9ff;
   --sl-color-primary-900: #eaebfe;
   --sl-color-primary-800: #d9dcfc;
@@ -51,4 +52,5 @@
   --sl-color-primary-200: #2f3af0;
   --sl-color-primary-100: #1721bf;
   --sl-color-primary-50: #191c47;
+  --sl-font-sans: 'Lexend', sans-serif;
 }

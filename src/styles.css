@@ -11,6 +11,15 @@ p {
 body {
   margin: var(--sl-spacing-large) auto;
   width: 50%;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(auto, 1fr);
@@ -23,8 +32,12 @@ body {
   }
 }
 
+sl-tab-panel {
+  padding: var(--sl-spacing-large) var(--sl-spacing-3x-large);
+}
+
 sl-tab-group {
-  padding: 0;
+  padding: var(--sl-spacing-2x-large) 0;
   grid-column: span 4;
 }
 
@@ -45,8 +58,9 @@ h1 {
   -webkit-text-fill-color: transparent;
 }
 
-div.info {
-  & sl-icon-button {
+sl-icon-button {
+  &.new-challenge {
+    justify-self: end;
     font-size: var(--sl-font-size-large);
   }
 }
@@ -66,8 +80,15 @@ sl-button {
   }
 }
 
+sl-tab {
+  & > sl-icon {
+    font-size: var(--sl-font-size-medium);
+  }
+}
+
 ol {
   list-style-type: none;
+  padding: 0;
 
   & > li {
     display: flex;
@@ -78,10 +99,6 @@ ol {
     & > sl-icon {
       color: var(--sl-color-primary-700);
       font-size: var(--sl-font-size-large);
-    }
-
-    &:has(sl-icon[name='exclamation-circle']) {
-      font-weight: 600;
     }
   }
 }
@@ -108,11 +125,21 @@ sl-select {
   }
 }
 
+sl-range {
+  --thumb-size: var(--sl-font-size-small);
+
+  &::part(form-control-input) {
+    margin: var(--sl-spacing-x-small) 0;
+  }
+}
+
 p.result {
   justify-self: center;
   font-family: var(--custom-font-display);
   font-size: var(--sl-font-size-x-large);
   visibility: hidden;
+  grid-column: span 4;
+  padding: var(--sl-spacing-large) 0;
 
   &.correct {
     visibility: visible;
@@ -161,13 +188,8 @@ div.score-field {
   }
 }
 
-p.made-with-love {
-  grid-column: span 4;
-  justify-self: center;
-}
-
 sl-switch {
-  --thumb-size: var(--sl-font-size-large);
+  --thumb-size: var(--sl-font-size-medium);
 }
 
 div.switch-mode {
@@ -184,15 +206,29 @@ div.switch-mode {
   }
 }
 
+div.challenge-container {
+  display: flex;
+  grid-column: span 4;
+  justify-content: space-between;
+  gap: var(--sl-spacing-medium);
+}
+
 @media only screen and (width <= 800px) {
   body {
     width: 90%;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--sl-spacing-x-large) var(--sl-spacing-large);
+  }
 
-    & > * {
-      grid-column: span 1;
-    }
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sl-spacing-3x-large) var(--sl-spacing-large);
+  }
+
+  sl-tab-group {
+    grid-column: span 2;
+  }
+
+  sl-tab-panel {
+    padding: var(--sl-spacing-large) var(--sl-spacing-x-large);
   }
 
   h1 {
@@ -209,23 +245,16 @@ div.switch-mode {
     gap: var(--sl-spacing-x-small);
   }
 
-  sl-tab-group {
-    grid-column: span 2;
-  }
-
   .piano-container {
     grid-column: span 2;
   }
 
-  p.made-with-love {
-    grid-column: span 2;
-  }
-
-  sl-select.answer {
+  div.challenge-container {
     grid-column: span 2;
   }
 
   p.result {
     grid-column: span 2;
+    padding: var(--sl-spacing-medium) 0;
   }
 }

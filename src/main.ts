@@ -1,20 +1,24 @@
 import '@shoelace-style/shoelace/dist/themes/light.css';
 import '@shoelace-style/shoelace/dist/themes/dark.css';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
-import '@shoelace-style/shoelace/dist/components/dialog/dialog.js';
 import '@shoelace-style/shoelace/dist/components/icon/icon.js';
 import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js';
 import '@shoelace-style/shoelace/dist/components/option/option.js';
+import '@shoelace-style/shoelace/dist/components/radio-button/radio-button.js';
+import '@shoelace-style/shoelace/dist/components/radio-group/radio-group.js';
+import '@shoelace-style/shoelace/dist/components/range/range.js';
 import '@shoelace-style/shoelace/dist/components/select/select.js';
 import '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import '@shoelace-style/shoelace/dist/components/tab/tab.js';
 import '@shoelace-style/shoelace/dist/components/tab-group/tab-group.js';
+import '@shoelace-style/shoelace/dist/components/tab-panel/tab-panel.js';
+import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 import 'custom-piano-keys';
 import './theme.css';
 
-import SlDialog from '@shoelace-style/shoelace/dist/components/dialog/dialog.js';
 import SlButton from '@shoelace-style/shoelace/dist/components/button/button.js';
-import SlTabGroup from '@shoelace-style/shoelace/dist/components/tab-group/tab-group.js';
+import SlRadioGroup from '@shoelace-style/shoelace/dist/components/radio-group/radio-group.js';
+import SlRange from '@shoelace-style/shoelace/dist/components/range/range.js';
 import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.js';
 
 import { createChallenge } from './challenge';
@@ -47,6 +51,7 @@ let shouldRestart = false;
 let shouldStop = false;
 let scores = getScores();
 let score = scores[challengeType];
+let solved = false;
 let started = false;
 
 const switchMode = document.querySelector('div.switch-mode > sl-switch');
@@ -78,14 +83,11 @@ if (mode === 'dark') {
 
 changeBackgroundColor();
 
-const dialog = document.querySelector('div.info > sl-dialog') as SlDialog;
-const openDialogButton = dialog.nextElementSibling as SlButton;
-const closeDialogButton = dialog.querySelector(
-  'sl-button[slot="footer"]'
-) as SlButton;
+const rangeSpeed = document.querySelector('sl-range.speed') as SlRange;
 
-openDialogButton.addEventListener('click', () => dialog.show());
-closeDialogButton.addEventListener('click', () => dialog.hide());
+rangeSpeed.addEventListener('sl-change', () => {
+  noteLength = rangeSpeed.value;
+});
 
 const pianoKeys = document.querySelector('custom-piano-keys') as HTMLElement;
 const pResult = document.querySelector('p.result') as HTMLParagraphElement;
@@ -103,7 +105,7 @@ const pAverage = document.querySelector(
 ) as HTMLParagraphElement;
 
 const buttonNewChallenge = document.querySelector(
-  'sl-button.new-challenge'
+  'sl-icon-button.new-challenge'
 ) as SlButton;
 
 const buttonPlayChallenge = document.querySelector(
@@ -122,6 +124,7 @@ function setNewChallenge() {
   pResult.classList.remove('correct', 'incorrect');
   pResult.innerText = 'Result';
   pianoKeys.setAttribute('marked-keys', '');
+  solved = false;
   started = false;
   setAnswerOptions();
 }
@@ -253,14 +256,14 @@ buttonTogglePiano.addEventListener('click', () => {
   }
 });
 
-const tabChallengeType = document.querySelector(
-  'sl-tab-group.challenge-type'
-) as SlTabGroup;
+const radioGroupChallengeType = document.querySelector(
+  'sl-radio-group.challenge-type'
+) as SlRadioGroup;
 
 const selectAnswer = document.querySelector('sl-select.answer') as SlSelect;
 
-tabChallengeType?.addEventListener('sl-tab-show', (event: any) => {
-  challengeType = event.detail.name as ChallengeType;
+radioGroupChallengeType?.addEventListener('sl-change', () => {
+  challengeType = radioGroupChallengeType.value as ChallengeType;
   score = scores[challengeType];
   renderScore();
   setNewChallenge();
@@ -274,19 +277,25 @@ selectAnswer?.addEventListener('sl-change', (event) => {
   }
 
   const score = scores[challengeType];
-  ++score.totalGuesses;
-  ++guesses;
+
+  if (!solved) {
+    ++score.totalGuesses;
+    ++guesses;
+  }
 
   if (removeSpaces(challenge.answer.value) === answer) {
-    ++score.challengesCompleted;
+    if (!solved) {
+      ++score.challengesCompleted;
+
+      if (guesses === 1) {
+        ++score.correctFirstGuesses;
+      }
+    }
+
+    solved = true;
     pResult.classList.remove('incorrect');
     pResult.classList.add('correct');
     pResult.innerText = 'Correct';
-
-    if (guesses === 1) {
-      ++score.correctFirstGuesses;
-    }
-
     renderScore();
   } else {
     pResult.classList.remove('correct');

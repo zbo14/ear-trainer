@@ -76,79 +76,106 @@
         document.body.classList.add('sl-theme-dark');
       }
     </script>
-    <h1>Ear Trainer</h1>
-    <div class="group">
-      <div class="info">
-        <sl-dialog label="How it works">
-          <ol>
-            <li>
-              <sl-icon name="exclamation-circle"></sl-icon>Make sure sound is
-              on!
-            </li>
-            <li>
-              <sl-icon name="1-circle-fill"></sl-icon>Choose a type of challenge
-            </li>
-            <li>
-              <sl-icon name="2-circle-fill"></sl-icon>Play the sound, and listen
-            </li>
-            <li>
-              <sl-icon name="3-circle-fill"></sl-icon>Pick an answer, see if
-              you're right
-            </li>
-            <li>
-              <sl-icon name="4-circle-fill"></sl-icon>Start a new challenge
-            </li>
-          </ol>
-          <sl-button slot="footer" variant="primary">Got it</sl-button>
-        </sl-dialog>
-        <sl-icon-button
-          label="Open info dialog"
-          name="info-circle"
-        ></sl-icon-button>
-      </div>
+    <div class="row">
+      <h1>Ear Trainer</h1>
       <div class="switch-mode">
         <sl-icon name="sun"></sl-icon>
-        <sl-switch size="medium">Switch theme mode</sl-switch>
+        <sl-switch size="small">Switch theme mode</sl-switch>
         <sl-icon name="moon-fill"></sl-icon>
       </div>
     </div>
-    <sl-tab-group class="challenge-type">
-      <sl-tab slot="nav" panel="chords" active>Chords</sl-tab>
-      <sl-tab slot="nav" panel="intervals">Intervals</sl-tab>
-      <sl-tab slot="nav" panel="progressions">Progressions</sl-tab>
-      <sl-tab slot="nav" panel="scales">Scales</sl-tab>
+    <sl-tab-group>
+      <sl-tab slot="nav" panel="get-started" active> Get started </sl-tab>
+      <sl-tab slot="nav" panel="training" type="chords">Training</sl-tab>
+      <sl-tab slot="nav" panel="settings"> Settings </sl-tab>
+      <sl-tab-panel name="training">
+        <div class="grid">
+          <div class="challenge-container">
+            <sl-radio-group class="challenge-type" value="chords">
+              <sl-radio-button value="chords">Chords</sl-radio-button>
+              <sl-radio-button value="intervals">Intervals</sl-radio-button>
+              <sl-radio-button value="progressions"
+                >Progressions</sl-radio-button
+              >
+              <sl-radio-button value="scales">Scales</sl-radio-button>
+            </sl-radio-group>
+            <sl-tooltip content="Start a new challenge">
+              <sl-icon-button
+                class="new-challenge"
+                name="arrow-clockwise"
+              ></sl-icon-button>
+            </sl-tooltip>
+          </div>
+          <sl-button class="play-challenge">
+            Play
+            <sl-icon name="volume-up"></sl-icon>
+          </sl-button>
+          <sl-select class="answer" label="Answer"></sl-select>
+          <p class="result"></p>
+          <div class="piano-container">
+            <sl-button class="toggle-piano">Hide piano</sl-button>
+            <custom-piano-keys
+              oct-count="3"
+              mark-color="#f13c68"
+            ></custom-piano-keys>
+          </div>
+          <div class="score-field started">
+            <p class="name">Started</p>
+            <p class="value"></p>
+          </div>
+          <div class="score-field completed">
+            <p class="name">Completed</p>
+            <p class="value"></p>
+          </div>
+          <div class="score-field correct">
+            <p class="name">Correct</p>
+            <p class="value"></p>
+          </div>
+          <div class="score-field average">
+            <p class="name">Average</p>
+            <p class="value"></p>
+          </div>
+        </div>
+      </sl-tab-panel>
+      <sl-tab-panel name="settings">
+        <div class="grid">
+          <sl-range
+            class="speed"
+            label="Playback speed"
+            help-text="Seconds per note/chord (faster to slower)"
+            min="0.5"
+            max="2"
+            step="0.1"
+            value="1"
+          ></sl-range>
+        </div>
+      </sl-tab-panel>
+      <sl-tab-panel name="get-started">
+        <b>Make sure sound is on!</b>
+        <ol>
+          <li>
+            <sl-icon name="1-circle-fill"></sl-icon
+            ><span>Click on "Training"</span>
+          </li>
+          <li>
+            <sl-icon name="2-circle-fill"></sl-icon
+            ><span>Select a type of challenge</span>
+          </li>
+          <li>
+            <sl-icon name="3-circle-fill"></sl-icon
+            ><span>Press "Play" to hear the sound</span>
+          </li>
+          <li>
+            <sl-icon name="4-circle-fill"></sl-icon
+            ><span>Pick an answer, see if you're right</span>
+          </li>
+          <li>
+            <sl-icon name="5-circle-fill"></sl-icon
+            ><span>Start a new challenge</span>
+          </li>
+        </ol>
+      </sl-tab-panel>
     </sl-tab-group>
-    <sl-button class="play-challenge">
-      Play
-      <sl-icon name="volume-up"></sl-icon>
-    </sl-button>
-    <sl-button class="new-challenge"> Next </sl-button>
-    <sl-select class="answer" label="Answer"></sl-select>
-    <p class="result"></p>
-    <div class="piano-container">
-      <sl-button class="toggle-piano">Hide piano</sl-button>
-      <custom-piano-keys oct-count="3" mark-color="#f13c68"></custom-piano-keys>
-    </div>
-    <div class="score-field started">
-      <p class="name">Started</p>
-      <p class="value"></p>
-    </div>
-    <div class="score-field completed">
-      <p class="name">Completed</p>
-      <p class="value"></p>
-    </div>
-    <div class="score-field correct">
-      <p class="name">Correct</p>
-      <p class="value"></p>
-    </div>
-    <div class="score-field average">
-      <p class="name">Average</p>
-      <p class="value"></p>
-    </div>
-    <p class="made-with-love">
-      Made with ❤️ by
-      <a href="https://zachbalder.me" target="_blank">Zach</a>
-    </p>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
