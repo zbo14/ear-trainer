@@ -2,7 +2,6 @@ import '@shoelace-style/shoelace/dist/themes/light.css';
 import '@shoelace-style/shoelace/dist/themes/dark.css';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
 import '@shoelace-style/shoelace/dist/components/icon/icon.js';
-import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js';
 import '@shoelace-style/shoelace/dist/components/option/option.js';
 import '@shoelace-style/shoelace/dist/components/radio-button/radio-button.js';
 import '@shoelace-style/shoelace/dist/components/radio-group/radio-group.js';
@@ -12,7 +11,6 @@ import '@shoelace-style/shoelace/dist/components/switch/switch.js';
 import '@shoelace-style/shoelace/dist/components/tab/tab.js';
 import '@shoelace-style/shoelace/dist/components/tab-group/tab-group.js';
 import '@shoelace-style/shoelace/dist/components/tab-panel/tab-panel.js';
-import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 import 'custom-piano-keys';
 import './theme.css';
 
@@ -105,7 +103,7 @@ const pAverage = document.querySelector(
 ) as HTMLParagraphElement;
 
 const buttonNewChallenge = document.querySelector(
-  'sl-icon-button.new-challenge'
+  'sl-button.new-challenge'
 ) as SlButton;
 
 const buttonPlayChallenge = document.querySelector(
@@ -317,7 +315,7 @@ function renderScore() {
 function setPianoKeysWidth() {
   pianoKeys.setAttribute(
     'oct-w-factor',
-    String(window.innerWidth <= 800 ? 1.25 : 1.5)
+    String(window.innerWidth <= 800 ? 1.1 : 1.5)
   );
 }
 

@@ -206,13 +206,6 @@ div.switch-mode {
   }
 }
 
-div.challenge-container {
-  display: flex;
-  grid-column: span 4;
-  justify-content: space-between;
-  gap: var(--sl-spacing-medium);
-}
-
 @media only screen and (width <= 800px) {
   body {
     width: 90%;
@@ -228,7 +221,7 @@ div.challenge-container {
   }
 
   sl-tab-panel {
-    padding: var(--sl-spacing-large) var(--sl-spacing-x-large);
+    padding: var(--sl-spacing-large) var(--sl-spacing-small);
   }
 
   h1 {

@@ -91,7 +91,7 @@
       <sl-tab-panel name="training">
         <div class="grid">
           <div class="challenge-container">
-            <sl-radio-group class="challenge-type" value="chords">
+            <sl-radio-group class="challenge-type" value="chords" size="small">
               <sl-radio-button value="chords">Chords</sl-radio-button>
               <sl-radio-button value="intervals">Intervals</sl-radio-button>
               <sl-radio-button value="progressions"
@@ -99,13 +99,8 @@
               >
               <sl-radio-button value="scales">Scales</sl-radio-button>
             </sl-radio-group>
-            <sl-tooltip content="Start a new challenge">
-              <sl-icon-button
-                class="new-challenge"
-                name="arrow-clockwise"
-              ></sl-icon-button>
-            </sl-tooltip>
           </div>
+          <sl-button class="new-challenge">New challenge</sl-button>
           <sl-button class="play-challenge">
             Play
             <sl-icon name="volume-up"></sl-icon>
