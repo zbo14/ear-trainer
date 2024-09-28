@@ -48,10 +48,12 @@ export function createChallenge(type: ChallengeType): Challenge {
 
     case 'progressions': {
       const definition = chooseRandom(definitions);
-      const chordNumerals = parseChordNumerals(definition);
+      const chordNumerals = parseChordNumerals(definition.value);
       const filteredDefinitions = definitions.filter(
-        (definition) =>
-          parseChordNumerals(definition).length === chordNumerals.length
+        (otherDefinition) =>
+          otherDefinition.value !== definition.value &&
+          parseChordNumerals(otherDefinition.value).length ===
+            chordNumerals.length
       );
       const options = chooseRandoms(filteredDefinitions, 5, definition);
       const notes = getProgressionNotes(chordNumerals, note, octave);

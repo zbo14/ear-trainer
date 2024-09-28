@@ -1,4 +1,4 @@
-import * as Tone from 'tone';
+import { Sampler, start } from 'tone';
 
 const urls = {
   A0: 'A0.mp3',
@@ -14,10 +14,10 @@ for (let i = 2; i <= 6; i++) {
   });
 }
 
-export const sampler = new Tone.Sampler({
+export const sampler = new Sampler({
   urls,
   release: 1,
   baseUrl: 'https://tonejs.github.io/audio/salamander/',
 }).toDestination();
 
-Tone.start();
+start();

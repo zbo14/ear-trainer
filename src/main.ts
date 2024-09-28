@@ -35,6 +35,7 @@ import {
   setScores,
   showElements,
   translateInterval,
+  translateProgression,
 } from './util';
 
 let answer: string = '';
@@ -164,6 +165,11 @@ function setAnswerOptions() {
         );
         slOption.innerText = option.value;
         slOption.append(small);
+        break;
+      }
+
+      case 'progressions': {
+        slOption.innerText = translateProgression(option.value);
         break;
       }
 

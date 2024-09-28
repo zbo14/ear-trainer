@@ -2,7 +2,7 @@ import { get as getChord, notes as chordNotes } from '@tonaljs/chord';
 import { get as getNote, transpose } from '@tonaljs/note';
 import { fromRomanNumerals as progression } from '@tonaljs/progression';
 import { get as getScale } from '@tonaljs/scale';
-import { ChallengeDefinition, Mode, Score, Scores } from './types';
+import { Mode, Score, Scores } from './types';
 
 export function chooseRandom<T>(items: T[]): T {
   return items[Math.floor(items.length * Math.random())];
@@ -191,8 +191,8 @@ export function notesToPianoKeys(notes: string[][]) {
   });
 }
 
-export function parseChordNumerals(definition: ChallengeDefinition) {
-  return definition.value.split(/,\s*/g);
+export function parseChordNumerals(progression: string) {
+  return progression.split(/,\s*/g);
 }
 
 export function removeSpaces(string: string) {
@@ -219,18 +219,20 @@ export function shuffleItems<T>(items: T[]): T[] {
 }
 
 export function translateInterval(interval: string) {
-  const [, number, letter] = interval.match(/([0-9]+)([ADMPdm])/) as string[];
+  const [, number, letter] = interval.match(/([0-9]+)([ADMP])/i) as string[];
 
   let accidental = '';
 
   switch (letter) {
-    case 'A': {
+    case 'A':
+    case 'a': {
       accidental = '#';
       break;
     }
 
     case 'D':
     case 'd':
+    case 'M':
     case 'm': {
       accidental = 'b';
       break;
@@ -238,4 +240,40 @@ export function translateInterval(interval: string) {
   }
 
   return accidental + number;
+}
+
+export function translateProgression(progression: string) {
+  return Array.from(
+    progression.matchAll(/((?:#|b)*)([IV]+)([ADadm]?)(.*?)(?:,|$)/g)
+  )
+    .map(([, accidental, numeral, mode, rest]) => {
+      switch (mode) {
+        case 'A':
+        case 'a': {
+          numeral = numeral.toUpperCase();
+          mode = '+';
+          break;
+        }
+
+        case 'D':
+        case 'd': {
+          numeral = numeral.toLowerCase();
+          mode = 'ᵒ';
+          break;
+        }
+
+        case 'm': {
+          numeral = numeral.toLowerCase();
+          mode = '';
+          break;
+        }
+
+        default: {
+          numeral = numeral.toUpperCase();
+        }
+      }
+
+      return accidental + numeral + mode + rest;
+    })
+    .join(', ');
 }

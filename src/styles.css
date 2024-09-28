@@ -213,7 +213,7 @@ div.switch-mode {
 
   .grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--sl-spacing-3x-large) var(--sl-spacing-large);
+    gap: var(--sl-spacing-x-large) var(--sl-spacing-large);
   }
 
   sl-tab-group {
