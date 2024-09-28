@@ -232,7 +232,6 @@ export function translateInterval(interval: string) {
 
     case 'D':
     case 'd':
-    case 'M':
     case 'm': {
       accidental = 'b';
       break;
