@@ -38,11 +38,20 @@ export function createScore(): Score {
   };
 }
 
+export function createScores(): Scores {
+  return {
+    chords: createScore(),
+    intervals: createScore(),
+    progressions: createScore(),
+    scales: createScore(),
+  };
+}
+
 export function getChordName(chordName: string, note: string) {
   return (
-    chordName.replace(
-      /^.*?\/([1-7])([MPdm])?$/,
-      (match, p1, p2 = '', offset) => {
+    chordName
+      .trim()
+      .replace(/^.*?\/([1-7])([MPdm])?$/, (match, p1, p2 = '', offset) => {
         let interval;
 
         if (p2.length) {
@@ -62,8 +71,7 @@ export function getChordName(chordName: string, note: string) {
             transpose(note, interval) +
             match.slice(offset + p1.length + p2.length + 1))
         );
-      }
-    ) || 'M'
+      }) || 'M'
   );
 }
 
@@ -98,11 +106,9 @@ export function getMode(): Mode {
     window.matchMedia &&
     window.matchMedia('(prefers-color-scheme: dark)').matches
   ) {
-    setMode('dark');
     return 'dark';
   }
 
-  setMode('light');
   return 'light';
 }
 
@@ -135,20 +141,11 @@ export function getScaleNotes(scale: string, note: string, octave: number) {
 export function getScores(): Scores {
   const scoreString = localStorage.getItem('scores');
 
-  if (!scoreString) {
-    const scores = {
-      chords: createScore(),
-      intervals: createScore(),
-      progressions: createScore(),
-      scales: createScore(),
-    };
-
-    setScores(scores);
-
-    return scores;
+  if (scoreString) {
+    return JSON.parse(scoreString);
   }
 
-  return JSON.parse(scoreString);
+  return createScores();
 }
 
 export function hideElements(...elements: HTMLElement[]) {
@@ -197,15 +194,6 @@ export function parseChordNumerals(progression: string) {
 
 export function removeSpaces(string: string) {
   return string.replace(/ /g, '_');
-}
-
-export function setMode(mode: Mode) {
-  localStorage.setItem('mode', mode);
-  return mode;
-}
-
-export function setScores(scores: Scores) {
-  localStorage.setItem('scores', JSON.stringify(scores));
 }
 
 export function showElements(...elements: HTMLElement[]) {

@@ -25,7 +25,7 @@ export default {
     { value: 'maj' },
     { value: 'maj#4' },
     { value: 'maj7' },
-    { value: 'maj7#5 ' },
+    { value: 'maj7#5' },
     { value: 'maj9' },
     { value: '/3' },
     { value: '/5' },

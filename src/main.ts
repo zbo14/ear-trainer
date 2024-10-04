@@ -19,9 +19,9 @@ import SlRadioGroup from '@shoelace-style/shoelace/dist/components/radio-group/r
 import SlRange from '@shoelace-style/shoelace/dist/components/range/range.js';
 import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.js';
 
-import { createChallenge } from './challenge';
-import { Challenge, ChallengeType } from './types';
+import { ChallengeType } from './types';
 import { sampler } from './sampler';
+import { state } from './state';
 
 import {
   getChordIntervals,
@@ -29,29 +29,15 @@ import {
   getScaleIntervals,
   getScores,
   hideElements,
-  notesToPianoKeys,
   removeSpaces,
-  setMode,
-  setScores,
   showElements,
   translateInterval,
   translateProgression,
 } from './util';
 
-let answer: string = '';
-let challenge: Challenge | null = null;
-let challengeType: ChallengeType = 'chords';
-let guesses = 0;
-let isPlaying = false;
-let markedKeys: number[][] = [[]];
-let mode = getMode();
-let noteLength = 1;
-let shouldRestart = false;
-let shouldStop = false;
-let scores = getScores();
-let score = scores[challengeType];
-let solved = false;
-let started = false;
+state.localStorage = window.localStorage;
+state.setMode(getMode());
+state.setScores(getScores());
 
 const switchMode = document.querySelector('div.switch-mode > sl-switch');
 const metaThemeColor = document.head.querySelector(
@@ -60,14 +46,14 @@ const metaThemeColor = document.head.querySelector(
 
 function changeBackgroundColor() {
   document.documentElement.style.backgroundColor = metaThemeColor.content =
-    mode === 'dark' ? '#191c47' : '#f9f9ff';
+    state.mode === 'dark' ? '#191c47' : '#f9f9ff';
 }
 
 switchMode?.addEventListener('sl-change', (event) => {
   const { checked } = event.target as HTMLInputElement;
-  mode = setMode(checked ? 'dark' : 'light');
+  state.setMode(checked ? 'dark' : 'light');
 
-  if (mode === 'dark') {
+  if (state.mode === 'dark') {
     document.body.classList.add('sl-theme-dark');
   } else {
     document.body.classList.remove('sl-theme-dark');
@@ -76,7 +62,7 @@ switchMode?.addEventListener('sl-change', (event) => {
   changeBackgroundColor();
 });
 
-if (mode === 'dark') {
+if (state.mode === 'dark') {
   switchMode?.setAttribute('checked', 'true');
 }
 
@@ -85,7 +71,7 @@ changeBackgroundColor();
 const rangeSpeed = document.querySelector('sl-range.speed') as SlRange;
 
 rangeSpeed.addEventListener('sl-change', () => {
-  noteLength = rangeSpeed.value;
+  state.noteLength = rangeSpeed.value;
 });
 
 const pianoKeys = document.querySelector('custom-piano-keys') as HTMLElement;
@@ -116,37 +102,34 @@ const buttonTogglePiano = document.querySelector(
 ) as SlButton;
 
 function setNewChallenge() {
-  stopPlayback();
-  challenge = createChallenge(challengeType);
-  guesses = 0;
-  markedKeys = notesToPianoKeys(challenge.notes);
+  state.stopPlayback();
+  state.setNewChallenge();
   pResult.classList.remove('correct', 'incorrect');
   pResult.innerText = 'Result';
   pianoKeys.setAttribute('marked-keys', '');
-  solved = false;
-  started = false;
   setAnswerOptions();
 }
 
 function setAnswerOptions() {
-  if (!challenge) {
+  if (!state.challenge) {
     return;
   }
 
   selectAnswer.innerHTML = '';
   selectAnswer.value = '';
 
-  for (const option of challenge.options) {
+  for (const option of state.challenge.options) {
     const slOption = document.createElement('sl-option');
     slOption.setAttribute('value', removeSpaces(option.value));
 
-    switch (challengeType) {
+    switch (state.challengeType) {
       case 'chords': {
         const small = document.createElement('small');
         small.setAttribute('slot', 'suffix');
-        small.innerText = getChordIntervals(option.value, challenge.note).join(
-          ', '
-        );
+        small.innerText = getChordIntervals(
+          option.value,
+          state.challenge.note
+        ).join(', ');
         slOption.innerText = option.value;
         slOption.append(small);
         break;
@@ -160,9 +143,10 @@ function setAnswerOptions() {
       case 'scales': {
         const small = document.createElement('small');
         small.setAttribute('slot', 'suffix');
-        small.innerText = getScaleIntervals(option.value, challenge.note).join(
-          ', '
-        );
+        small.innerText = getScaleIntervals(
+          option.value,
+          state.challenge.note
+        ).join(', ');
         slOption.innerText = option.value;
         slOption.append(small);
         break;
@@ -183,35 +167,34 @@ function setAnswerOptions() {
 }
 
 async function playChallenge() {
-  if (!challenge) {
+  if (!state.challenge) {
     return;
   }
 
-  if (isPlaying) {
-    shouldRestart = true;
+  if (state.isPlaying) {
+    state.shouldRestart = true;
     return;
   }
 
-  if (!started) {
-    started = true;
-    ++score.challengesStarted;
+  if (!state.started) {
+    state.startChallenge();
     renderScore();
   }
 
-  isPlaying = true;
+  state.isPlaying = true;
   pianoKeys.setAttribute('marked-keys', '');
 
   let index = 0;
 
-  while (index < challenge.notes.length) {
-    if (shouldRestart) {
-      shouldRestart = false;
+  while (index < state.challenge.notes.length) {
+    if (state.shouldRestart) {
+      state.shouldRestart = false;
       index = 0;
       continue;
     }
 
-    if (shouldStop) {
-      shouldStop = false;
+    if (state.shouldStop) {
+      state.shouldStop = false;
       break;
     }
 
@@ -219,25 +202,16 @@ async function playChallenge() {
       await sampler.context.resume();
     }
 
-    sampler.triggerAttackRelease(challenge.notes[index], String(noteLength));
-    pianoKeys.setAttribute('marked-keys', markedKeys[index].join(' '));
-    await new Promise((resolve) => setTimeout(resolve, noteLength * 1e3));
+    sampler.triggerAttackRelease(
+      state.challenge.notes[index],
+      String(state.noteLength)
+    );
+    pianoKeys.setAttribute('marked-keys', state.markedKeys[index].join(' '));
+    await new Promise((resolve) => setTimeout(resolve, state.noteLength * 1e3));
     ++index;
   }
 
-  isPlaying = false;
-}
-
-function stopPlayback() {
-  if (shouldStop || !isPlaying) {
-    return;
-  }
-
-  shouldStop = true;
-}
-
-function saveScores() {
-  setScores(scores);
+  state.isPlaying = false;
 }
 
 buttonNewChallenge?.addEventListener('click', () => {
@@ -267,36 +241,16 @@ const radioGroupChallengeType = document.querySelector(
 const selectAnswer = document.querySelector('sl-select.answer') as SlSelect;
 
 radioGroupChallengeType?.addEventListener('sl-change', () => {
-  challengeType = radioGroupChallengeType.value as ChallengeType;
-  score = scores[challengeType];
+  state.changeChallengeType(radioGroupChallengeType.value as ChallengeType);
   renderScore();
   setNewChallenge();
 });
 
 selectAnswer?.addEventListener('sl-change', (event) => {
-  answer = (event.target as SlSelect).value as string;
+  const answer = (event.target as SlSelect).value as string;
+  const isCorrect = state.guess(answer);
 
-  if (!challenge || !answer) {
-    return;
-  }
-
-  const score = scores[challengeType];
-
-  if (!solved) {
-    ++score.totalGuesses;
-    ++guesses;
-  }
-
-  if (removeSpaces(challenge.answer.value) === answer) {
-    if (!solved) {
-      ++score.challengesCompleted;
-
-      if (guesses === 1) {
-        ++score.correctFirstGuesses;
-      }
-    }
-
-    solved = true;
+  if (isCorrect) {
     pResult.classList.remove('incorrect');
     pResult.classList.add('correct');
     pResult.innerText = 'Correct';
@@ -309,13 +263,10 @@ selectAnswer?.addEventListener('sl-change', (event) => {
 });
 
 function renderScore() {
-  pStarted.innerText = String(score.challengesStarted);
-  pCompleted.innerText = String(score.challengesCompleted);
-  pCorrect.innerText = String(score.correctFirstGuesses);
-  pAverage.innerText = String(
-    (Math.round((score.totalGuesses * 10) / score.challengesCompleted) || 0) /
-      10
-  );
+  pStarted.innerText = String(state.score.challengesStarted);
+  pCompleted.innerText = String(state.score.challengesCompleted);
+  pCorrect.innerText = String(state.score.correctFirstGuesses);
+  pAverage.innerText = String(state.scoreAverage);
 }
 
 function setPianoKeysWidth() {
@@ -326,11 +277,11 @@ function setPianoKeysWidth() {
 }
 
 document.addEventListener('visibilitychange', () => {
-  saveScores();
+  state.setScores();
 });
 
 window.addEventListener('beforeunload', () => {
-  saveScores();
+  state.setScores();
 });
 
 window.addEventListener('resize', () => {

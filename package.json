@@ -2,7 +2,7 @@
   "name": "ear-trainer",
   "description": "Ear training web app with challenges for chords, intervals, progressions, and scales.",
   "private": true,
-  "version": "0.5.1",
+  "version": "0.5.2",
   "type": "module",
   "author": "Zach Balder",
   "license": "UNLICENSED",
