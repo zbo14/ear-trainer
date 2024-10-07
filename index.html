@@ -157,7 +157,12 @@
         </div>
       </sl-tab-panel>
       <sl-tab-panel name="settings">
-        <div class="grid">
+        <div class="column">
+          <sl-select class="level" label="Difficulty" placement="bottom">
+            <sl-option value="easy">Easy</sl-option>
+            <sl-option value="medium">Medium</sl-option>
+            <sl-option value="hard">Hard</sl-option>
+          </sl-select>
           <sl-range
             class="speed"
             label="Playback speed"

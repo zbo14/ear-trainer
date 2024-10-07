@@ -1,5 +1,5 @@
 import { createChallenge } from './challenge';
-import { Challenge, ChallengeType, Mode } from './types';
+import { Challenge, ChallengeLevel, ChallengeType, Mode } from './types';
 import { createScores, notesToPianoKeys, removeSpaces } from './util';
 
 export class State {
@@ -8,6 +8,7 @@ export class State {
   challengeType: ChallengeType = 'chords';
   guesses = 0;
   isPlaying = false;
+  level: ChallengeLevel = 'easy';
   localStorage: Storage | null = null;
   markedKeys: number[][] = [[]];
   mode: Mode = 'light';
@@ -25,11 +26,6 @@ export class State {
         (this.score.totalGuesses * 10) / this.score.challengesCompleted
       ) || 0) / 10
     );
-  }
-
-  changeChallengeType(challengeType: ChallengeType) {
-    this.challengeType = challengeType;
-    this.score = this.scores[challengeType];
   }
 
   guess(answer: string) {
@@ -65,6 +61,19 @@ export class State {
     return isCorrect;
   }
 
+  setChallengeType(challengeType = this.challengeType) {
+    this.challengeType = challengeType;
+    this.score = this.scores[challengeType];
+  }
+
+  setLevel(level = this.level) {
+    this.level = level;
+
+    if (this.localStorage) {
+      this.localStorage.setItem('level', level);
+    }
+  }
+
   setLocalStorage() {
     this.localStorage = window.localStorage;
   }
@@ -78,7 +87,7 @@ export class State {
   }
 
   setNewChallenge() {
-    this.challenge = createChallenge(this.challengeType);
+    this.challenge = createChallenge(this.challengeType, this.level);
     this.guesses = 0;
     this.markedKeys = notesToPianoKeys(this.challenge.notes);
     this.solved = false;

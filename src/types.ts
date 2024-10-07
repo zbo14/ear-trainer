@@ -1,8 +1,8 @@
 export type ChallengeType = 'chords' | 'intervals' | 'progressions' | 'scales';
-export type ChallengeDifficulty = 'easy' | 'medium' | 'hard';
+export type ChallengeLevel = 'easy' | 'medium' | 'hard';
 
 export interface ChallengeDefinition {
-  name?: string;
+  level: ChallengeLevel;
   value: string;
 }
 

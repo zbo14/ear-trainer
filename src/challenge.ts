@@ -1,5 +1,10 @@
 import config from './challenge.config';
-import { ChallengeType, Challenge, ChallengeDefinition } from './types';
+import {
+  ChallengeType,
+  Challenge,
+  ChallengeDefinition,
+  ChallengeLevel,
+} from './types';
 
 import {
   chooseRandom,
@@ -11,8 +16,26 @@ import {
   parseChordNumerals,
 } from './util';
 
-export function createChallenge(type: ChallengeType): Challenge {
-  const definitions = config[type] as ChallengeDefinition[];
+export function createChallenge(
+  type: ChallengeType,
+  level: ChallengeLevel
+): Challenge {
+  const definitions = (config[type] as ChallengeDefinition[]).filter(
+    (definition) => {
+      switch (level) {
+        case 'easy': {
+          return definition.level === 'easy';
+        }
+
+        case 'medium': {
+          return ['easy', 'medium'].includes(definition.level);
+        }
+      }
+
+      return true;
+    }
+  );
+
   const note = chooseRandom(config.notes);
   const octave = chooseRandom(config.octaves);
 

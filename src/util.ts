@@ -2,7 +2,7 @@ import { get as getChord, notes as chordNotes } from '@tonaljs/chord';
 import { get as getNote, transpose } from '@tonaljs/note';
 import { fromRomanNumerals as progression } from '@tonaljs/progression';
 import { get as getScale } from '@tonaljs/scale';
-import { Mode, Score, Scores } from './types';
+import { ChallengeLevel, Mode, Score, Scores } from './types';
 
 export function chooseRandom<T>(items: T[]): T {
   return items[Math.floor(items.length * Math.random())];
@@ -93,6 +93,16 @@ export function getIntervalNotes(
   const tonic = `${note}${octave}`;
 
   return [[tonic], [transpose(tonic, interval)]];
+}
+
+export function getLevel(): ChallengeLevel {
+  const level = localStorage.getItem('level');
+
+  if (level) {
+    return level as ChallengeLevel;
+  }
+
+  return 'easy';
 }
 
 export function getMode(): Mode {

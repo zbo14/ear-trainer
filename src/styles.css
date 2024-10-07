@@ -19,6 +19,13 @@ body {
   align-items: center;
 }
 
+.column {
+  display: flex;
+  flex-direction: column;
+  max-width: 20vw;
+  gap: var(--sl-spacing-3x-large);
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -206,7 +213,7 @@ div.switch-mode {
   }
 }
 
-@media only screen and (width <= 800px) {
+@media only screen and (width <= 1200px) {
   body {
     width: 90%;
   }
@@ -214,6 +221,11 @@ div.switch-mode {
   .grid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--sl-spacing-x-large) var(--sl-spacing-large);
+  }
+
+  .column {
+    max-width: 90vw;
+    gap: var(--sl-spacing-x-large);
   }
 
   sl-tab-group {

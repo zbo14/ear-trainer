@@ -19,12 +19,13 @@ import SlRadioGroup from '@shoelace-style/shoelace/dist/components/radio-group/r
 import SlRange from '@shoelace-style/shoelace/dist/components/range/range.js';
 import SlSelect from '@shoelace-style/shoelace/dist/components/select/select.js';
 
-import { ChallengeType } from './types';
+import { ChallengeLevel, ChallengeType } from './types';
 import { sampler } from './sampler';
 import { state } from './state';
 
 import {
   getChordIntervals,
+  getLevel,
   getMode,
   getScaleIntervals,
   getScores,
@@ -35,7 +36,11 @@ import {
   translateProgression,
 } from './util';
 
-state.localStorage = window.localStorage;
+const SCREEN_SIZE_BREAKPOINT = 1200;
+
+state.setLocalStorage();
+
+state.setLevel(getLevel());
 state.setMode(getMode());
 state.setScores(getScores());
 
@@ -239,15 +244,16 @@ const radioGroupChallengeType = document.querySelector(
 ) as SlRadioGroup;
 
 const selectAnswer = document.querySelector('sl-select.answer') as SlSelect;
+const selectLevel = document.querySelector('sl-select.level') as SlSelect;
 
 radioGroupChallengeType?.addEventListener('sl-change', () => {
-  state.changeChallengeType(radioGroupChallengeType.value as ChallengeType);
+  state.setChallengeType(radioGroupChallengeType.value as ChallengeType);
   renderScore();
   setNewChallenge();
 });
 
-selectAnswer?.addEventListener('sl-change', (event) => {
-  const answer = (event.target as SlSelect).value as string;
+selectAnswer.addEventListener('sl-change', () => {
+  const answer = selectAnswer.value as string;
   const isCorrect = state.guess(answer);
 
   if (isCorrect) {
@@ -262,6 +268,13 @@ selectAnswer?.addEventListener('sl-change', (event) => {
   }
 });
 
+selectLevel.addEventListener('sl-change', () => {
+  state.setLevel(selectLevel.value as ChallengeLevel);
+  setNewChallenge();
+});
+
+selectLevel.value = state.level;
+
 function renderScore() {
   pStarted.innerText = String(state.score.challengesStarted);
   pCompleted.innerText = String(state.score.challengesCompleted);
@@ -272,7 +285,7 @@ function renderScore() {
 function setPianoKeysWidth() {
   pianoKeys.setAttribute(
     'oct-w-factor',
-    String(window.innerWidth <= 800 ? 1.1 : 1.5)
+    String(window.innerWidth < SCREEN_SIZE_BREAKPOINT ? 1.1 : 1.5)
   );
 }
 
